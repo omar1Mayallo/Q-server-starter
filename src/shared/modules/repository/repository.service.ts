@@ -169,7 +169,7 @@ export class RepositoryService<Model> {
     options: { withSoftDeleted?: boolean } = { withSoftDeleted: true },
   ): Promise<Model> {
     // [1] Check The Item Exists
-    let query = this.knex<Model>(tableName).where(conditions);
+    const query = this.knex<Model>(tableName).where(conditions);
 
     // Apply soft-deleted filter if specified
     if (!options.withSoftDeleted) {
@@ -360,7 +360,7 @@ export class RepositoryService<Model> {
     }
     // Default Sorting is LATEST_FIRST
     else if (withDefaultSort) {
-      queryBuilder.orderBy('created_at', 'desc');
+      queryBuilder.orderBy('id', 'desc');
     }
   }
 

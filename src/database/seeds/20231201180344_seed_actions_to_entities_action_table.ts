@@ -84,5 +84,131 @@ export async function seed(knex: Knex): Promise<void> {
       entity_key: 'groups',
       action_category: ActionCategory.DELETE,
     },
+
+    {
+      action_key: 'plans/list',
+      entity_key: 'plans',
+      action_category: ActionCategory.READ,
+    },
+    {
+      action_key: 'plans/create',
+      entity_key: 'plans',
+      action_category: ActionCategory.CREATE,
+    },
+    {
+      action_key: 'plans/update',
+      entity_key: 'plans',
+      action_category: ActionCategory.UPDATE,
+    },
+    {
+      action_key: 'plans/delete',
+      entity_key: 'plans',
+      action_category: ActionCategory.DELETE,
+    },
+
+    {
+      action_key: 'invoices/list',
+      entity_key: 'invoices',
+      action_category: ActionCategory.READ,
+    },
+    {
+      action_key: 'invoices/create',
+      entity_key: 'invoices',
+      action_category: ActionCategory.CREATE,
+    },
+    {
+      action_key: 'invoices/update',
+      entity_key: 'invoices',
+      action_category: ActionCategory.UPDATE,
+    },
+    {
+      action_key: 'invoices/delete',
+      entity_key: 'invoices',
+      action_category: ActionCategory.DELETE,
+    },
+
+    {
+      action_key: 'payments/list',
+      entity_key: 'payments',
+      action_category: ActionCategory.READ,
+    },
+    {
+      action_key: 'payments/create',
+      entity_key: 'payments',
+      action_category: ActionCategory.CREATE,
+    },
+    {
+      action_key: 'payments/update',
+      entity_key: 'payments',
+      action_category: ActionCategory.UPDATE,
+    },
+    {
+      action_key: 'payments/delete',
+      entity_key: 'payments',
+      action_category: ActionCategory.DELETE,
+    },
+
+    {
+      action_key: 'dues/list',
+      entity_key: 'dues',
+      action_category: ActionCategory.READ,
+    },
+    {
+      action_key: 'dues/create',
+      entity_key: 'dues',
+      action_category: ActionCategory.CREATE,
+    },
+    {
+      action_key: 'dues/update',
+      entity_key: 'dues',
+      action_category: ActionCategory.UPDATE,
+    },
+    {
+      action_key: 'dues/delete',
+      entity_key: 'dues',
+      action_category: ActionCategory.DELETE,
+    },
+
+    {
+      action_key: 'customers/list',
+      entity_key: 'customers',
+      action_category: ActionCategory.READ,
+    },
+    {
+      action_key: 'customers/create',
+      entity_key: 'customers',
+      action_category: ActionCategory.CREATE,
+    },
+    {
+      action_key: 'customers/update',
+      entity_key: 'customers',
+      action_category: ActionCategory.UPDATE,
+    },
+    {
+      action_key: 'customers/delete',
+      entity_key: 'customers',
+      action_category: ActionCategory.DELETE,
+    },
+
+    {
+      action_key: 'subscriptions/list',
+      entity_key: 'subscriptions',
+      action_category: ActionCategory.READ,
+    },
+    {
+      action_key: 'subscriptions/create',
+      entity_key: 'subscriptions',
+      action_category: ActionCategory.CREATE,
+    },
+    {
+      action_key: 'subscriptions/update',
+      entity_key: 'subscriptions',
+      action_category: ActionCategory.UPDATE,
+    },
+    {
+      action_key: 'subscriptions/delete',
+      entity_key: 'subscriptions',
+      action_category: ActionCategory.DELETE,
+    },
   ]);
 }

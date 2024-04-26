@@ -1,4 +1,4 @@
-import { ArrayMinSize, IsArray, IsInt, IsOptional } from 'class-validator';
+import { ArrayMinSize, IsArray, IsInt, IsOptional, Min } from 'class-validator';
 
 export class IsValidArrayIdsDTO {
   @IsOptional()
@@ -7,6 +7,10 @@ export class IsValidArrayIdsDTO {
   @IsInt({
     each: true,
     message: 'Each element in the array must be a valid integer',
+  })
+  @Min(1, {
+    each: true,
+    message: 'Each element in the array must be at least 0',
   })
   ids: number[];
 }

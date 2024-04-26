@@ -3,14 +3,14 @@ import { CustomReqQueryDTO } from 'src/shared/modules/repository/types/custom-re
 
 export class GetAllUsersDTO extends CustomReqQueryDTO {
   @IsOptional()
-  id: string | object;
+  id: string;
 
   @IsOptional()
-  deleted_at: string | object;
+  deleted_at: string;
 
   @IsOptional()
-  status: string | object;
+  status: string;
 
   @IsOptional()
-  type: string | object;
+  type: string;
 }

@@ -32,7 +32,8 @@ import { i18nExceptionFilterOptions } from './config/errors/i18nExceptionFilterO
   app.useGlobalPipes(
     new I18nValidationPipe({
       transform: true,
-      whitelist: true,
+      whitelist: true, // Enable whitelisting to strip non-DTO properties
+      forbidNonWhitelisted: true, // Optional: Throw errors when non-whitelisted fields are found
     }),
   );
   app.useGlobalFilters(

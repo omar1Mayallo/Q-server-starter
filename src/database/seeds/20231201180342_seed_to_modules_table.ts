@@ -22,6 +22,30 @@ export async function seed(knex: Knex): Promise<void> {
       parent_key: 'admin-panel',
     },
     {
+      module_key: 'financial-services',
+      en_name: 'Financial Services',
+      ar_name: 'الخدمات المالية',
+      source: USER_TYPE.ADMINISTRATIVE,
+      icon: 'MonetizationOn', // MUI Icons Name or imageLink or ex: "path-to-public.svg"
+      parent_key: 'admin-panel',
+    },
+    {
+      module_key: 'billing-management',
+      en_name: 'Billing Management',
+      ar_name: 'إدارة الفواتير',
+      source: USER_TYPE.ADMINISTRATIVE,
+      icon: 'RequestQuote', // MUI Icons Name or imageLink or ex: "path-to-public.svg"
+      parent_key: 'financial-services',
+    },
+    {
+      module_key: 'customers-management',
+      en_name: 'Customers Management',
+      ar_name: 'إدارة العملاء',
+      source: USER_TYPE.ADMINISTRATIVE,
+      icon: 'SupportAgent', // MUI Icons Name or imageLink or ex: "path-to-public.svg"
+      parent_key: 'admin-panel',
+    },
+    {
       module_key: 'portal-panel',
       en_name: 'Portal Panel',
       ar_name: 'لوحة البوابة',

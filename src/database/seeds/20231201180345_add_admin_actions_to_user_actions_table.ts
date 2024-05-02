@@ -44,6 +44,10 @@ export async function seed(knex: Knex): Promise<void> {
     { email: 'super-admin@gmail.com', action_key: 'subscriptions/create' },
     { email: 'super-admin@gmail.com', action_key: 'subscriptions/update' },
     { email: 'super-admin@gmail.com', action_key: 'subscriptions/delete' },
+    { email: 'super-admin@gmail.com', action_key: 'configurations/list' },
+    { email: 'super-admin@gmail.com', action_key: 'configurations/create' },
+    { email: 'super-admin@gmail.com', action_key: 'configurations/update' },
+    { email: 'super-admin@gmail.com', action_key: 'configurations/delete' },
 
     { email: 'admin@gmail.com', action_key: 'users/list' },
     { email: 'admin@gmail.com', action_key: 'users/create' },

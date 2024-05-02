@@ -7,20 +7,24 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { USER_ACTIONS } from 'src/shared/constants/actions';
 import { ActionName } from 'src/shared/decorators/action-name.decorator';
+import { IsAuthenticationGuard } from 'src/shared/decorators/is-auth-guard.decorator';
+import { LoggedUser } from 'src/shared/decorators/logged-user.decorator';
 import { IsValidParamIdDTO } from 'src/shared/dtos/is-valid-id-param.dto';
 import { IsValidArrayIdsDTO } from 'src/shared/dtos/is-valid-ids-arr.dto';
+import { UserModel } from 'src/shared/types/entities/user-management.model';
+import { FileValidator } from 'src/shared/utils/file-validator';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { GetAllUsersDTO } from './dto/get-users.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserService } from './user.service';
-import { LoggedUser } from 'src/shared/decorators/logged-user.decorator';
-import { UserModel } from 'src/shared/types/entities/user-management.model';
-import { IsAuthenticationGuard } from 'src/shared/decorators/is-auth-guard.decorator';
 
 @UseGuards(AuthGuard)
 @Controller('users')
@@ -63,11 +67,22 @@ export class UserController {
   // @URL: PUT => "/users/:id"
   @Put('/:id')
   @ActionName(USER_ACTIONS.UPDATE_USER)
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      fileFilter: FileValidator.fileFilter(
+        /\.(jpg|jpeg)$/,
+        'Only JPG, JPEG, files are allowed',
+      ),
+      limits: { fileSize: FileValidator.avatarSize },
+    }),
+  )
   async updateUser(
     @Param() param: IsValidParamIdDTO,
     @Body() body: UpdateUserDTO,
+    @UploadedFile()
+    avatar: Express.Multer.File,
   ) {
-    return await this.userService.updatedUser(param.id, body);
+    return await this.userService.updatedUser(param.id, body, avatar);
   }
 
   // @DESC: Delete One Or More Users

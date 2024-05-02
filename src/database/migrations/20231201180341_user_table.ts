@@ -13,6 +13,9 @@ export async function up(knex: Knex): Promise<void> {
     table.string('password').notNullable();
     table.string('type', 50).defaultTo(USER_TYPE.ADMINISTRATIVE).notNullable();
     table.string('status', 50).defaultTo(STATUS.ACTIVE).notNullable();
+    table.string('phone', 50).nullable();
+    table.boolean('login_with_otp').defaultTo(false).notNullable();
+    table.specificType('avatar', 'BYTEA').defaultTo(null);
 
     // TIMESTAMPS
     table.timestamp('deleted_at').nullable();

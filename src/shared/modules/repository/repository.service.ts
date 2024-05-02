@@ -356,6 +356,7 @@ export class RepositoryService<Model> {
 
       sortBy.forEach((sortOption) => {
         queryBuilder.orderBy(sortOption.column, sortOption.order);
+        queryBuilder.orderBy('id', 'asc');
       });
     }
     // Default Sorting is LATEST_FIRST

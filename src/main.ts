@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as compression from 'compression';
-import rateLimit from 'express-rate-limit';
+// import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { I18nValidationPipe } from 'nestjs-i18n';
 import { AppModule } from './app.module';
@@ -19,12 +19,12 @@ import { i18nExceptionFilterOptions } from './config/errors/i18nExceptionFilterO
   // [2] HELMET | https://helmetjs.github.io/
   app.use(helmet());
   // [3] RATE_LIMITER | https://www.npmjs.com/package/express-rate-limit
-  app.use(
-    rateLimit({
-      windowMs: 60 * 60 * 1000, // 1 Hour
-      max: 1000, // limit each IP to 1000 requests per windowMs
-    }),
-  );
+  // app.use(
+  //   rateLimit({
+  //     windowMs: 60 * 60 * 1000, // 1 Hour
+  //     max: 1000, // limit each IP to 1000 requests per windowMs
+  //   }),
+  // );
   // [4] COMPRESSION | https://www.npmjs.com/package/compression
   app.use(compression());
 

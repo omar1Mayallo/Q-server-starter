@@ -8,6 +8,8 @@ export type I18nTranslations = {
             "INVALID_EMAIL": string;
             "PASSWORD_REGEX": string;
             "USERNAME_REGEX": string;
+            "ARRAY_POSITIVE": string;
+            "INVALID_PHONE_NUMBER": string;
         };
         "Http_Errors": {
             "INVALID_CREDENTIALS": string;

@@ -59,11 +59,24 @@ export class UserService {
     await this.repoService.deleteByIds(TABLES.USERS, ids);
   }
 
-  async updatedUser(id: number, body: UpdateUserDTO) {
+  async updatedUser(
+    id: number,
+    body: UpdateUserDTO,
+    file: Express.Multer.File,
+  ) {
     if (body.password) {
       const hashedPassword = await this.bcryptService.hash(body.password);
       body.password = hashedPassword;
     }
+
+    if (file) {
+      body.avatar = file.buffer;
+    } else {
+      body.avatar = null;
+    }
+
+    // console.log(Buffer.from(file?.buffer));
+
     return await this.repoService.updateOne(TABLES.USERS, { id }, body);
   }
 }

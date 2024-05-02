@@ -38,6 +38,14 @@ export async function seed(knex: Knex): Promise<void> {
       parent_key: 'financial-services',
     },
     {
+      module_key: 'billing-settings',
+      en_name: 'Billing Settings',
+      ar_name: 'اعدادات الفواتير',
+      source: USER_TYPE.ADMINISTRATIVE,
+      icon: 'billing-settings.png', // MUI Icons Name or imageLink or ex: "path-to-public.svg"
+      parent_key: 'billing-management',
+    },
+    {
       module_key: 'customers-management',
       en_name: 'Customers Management',
       ar_name: 'إدارة العملاء',

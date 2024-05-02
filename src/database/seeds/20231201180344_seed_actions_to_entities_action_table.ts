@@ -170,6 +170,27 @@ export async function seed(knex: Knex): Promise<void> {
     },
 
     {
+      action_key: 'configurations/list',
+      entity_key: 'configurations',
+      action_category: ActionCategory.READ,
+    },
+    {
+      action_key: 'configurations/create',
+      entity_key: 'configurations',
+      action_category: ActionCategory.CREATE,
+    },
+    {
+      action_key: 'configurations/update',
+      entity_key: 'configurations',
+      action_category: ActionCategory.UPDATE,
+    },
+    {
+      action_key: 'configurations/delete',
+      entity_key: 'configurations',
+      action_category: ActionCategory.DELETE,
+    },
+
+    {
       action_key: 'customers/list',
       entity_key: 'customers',
       action_category: ActionCategory.READ,

@@ -89,6 +89,17 @@ export async function seed(knex: Knex): Promise<void> {
     },
 
     {
+      module_key: 'billing-settings',
+      entity_key: 'configurations',
+      en_name: 'configurations',
+      ar_name: 'الضبط',
+      entity_url:
+        'financial-services/billing-management/billing-settings/configurations',
+      order: 8,
+      icon: 'b-settings.png',
+    },
+
+    {
       module_key: 'customers-management',
       entity_key: 'customers',
       en_name: 'Customers',

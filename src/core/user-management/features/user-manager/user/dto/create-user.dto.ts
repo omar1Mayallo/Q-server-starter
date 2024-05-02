@@ -8,6 +8,7 @@ import {
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { I18nTranslations } from 'src/generated/i18n.generated';
 import { PASSWORD_REGEX, USERNAME_REGEX } from 'src/shared/constants/regexs';
+import { IsValidPhoneNumber } from 'src/shared/decorators/validations/IsValidPhoneNumber';
 import { STATUS, USER_TYPE } from 'src/shared/types/enums';
 
 export class CreateUserDTO {
@@ -52,9 +53,27 @@ export class CreateUserDTO {
 
   @IsEnum(STATUS)
   @IsOptional()
-  status: STATUS;
+  status: STATUS = STATUS.ACTIVE;
 
   @IsEnum(USER_TYPE)
   @IsOptional()
-  type: USER_TYPE;
+  type: USER_TYPE = USER_TYPE.ADMINISTRATIVE;
+
+  @IsValidPhoneNumber({
+    message: i18nValidationMessage<I18nTranslations>(
+      'errors.Validation_Errors.INVALID_PHONE_NUMBER',
+    ),
+  })
+  @IsNotEmpty({
+    message: i18nValidationMessage<I18nTranslations>(
+      'errors.Validation_Errors.REQUIRED',
+    ),
+  })
+  phone: string;
+
+  @IsOptional()
+  login_with_otp: boolean = false;
+
+  @IsOptional()
+  avatar: any;
 }

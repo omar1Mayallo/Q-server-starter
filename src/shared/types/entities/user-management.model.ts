@@ -30,3 +30,9 @@ export class RoleModel extends BaseModel {
 
   type: USER_TYPE;
 }
+
+export class UserRoleModel extends BaseModel {
+  user_id: number;
+
+  role_id: number;
+}

@@ -3,14 +3,11 @@ import { CustomReqQueryDTO } from 'src/shared/modules/repository/types/custom-re
 import { STATUS, USER_TYPE } from 'src/shared/types/enums';
 
 export class GetAllRolesDTO extends CustomReqQueryDTO {
-  @IsOptional()
-  id: string | object;
-
-  @IsOptional()
   @IsEnum(USER_TYPE)
+  @IsOptional()
   type: USER_TYPE;
 
-  @IsOptional()
   @IsEnum(STATUS)
+  @IsOptional()
   status: STATUS;
 }

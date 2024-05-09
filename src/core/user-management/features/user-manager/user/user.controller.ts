@@ -35,8 +35,21 @@ export class UserController {
   // @URL: POST => "/users"
   @Post()
   @ActionName(USER_ACTIONS.CREATE_USER)
-  async createUser(@Body() body: CreateUserDTO) {
-    return await this.userService.createUser(body);
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      fileFilter: FileValidator.fileFilter(
+        /\.(jpg|jpeg)$/,
+        'Only JPG, JPEG, files are allowed',
+      ),
+      limits: { fileSize: FileValidator.avatarSize },
+    }),
+  )
+  async createUser(
+    @Body() body: CreateUserDTO,
+    @UploadedFile()
+    avatar: Express.Multer.File,
+  ) {
+    return await this.userService.createUser(body, avatar);
   }
 
   // @DESC: Get All Users

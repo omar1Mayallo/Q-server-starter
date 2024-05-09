@@ -20,7 +20,10 @@ export class UserService {
     private readonly repoService: RepositoryService<UserModel>,
   ) {}
 
-  async createUser(body: CreateUserDTO): Promise<UserModel> {
+  async createUser(
+    body: CreateUserDTO,
+    file: Express.Multer.File,
+  ): Promise<UserModel> {
     // 1) Check If Email already exists
     const emailExist = await this.repoService.getOne(
       TABLES.USERS,
@@ -37,6 +40,13 @@ export class UserService {
 
     // 2) Hash the password before Inserting
     const hashedPassword = await this.bcryptService.hash(body.password);
+
+    // 3) Handle Avatar Uploaded
+    if (file) {
+      body.avatar = file.buffer;
+    } else {
+      body.avatar = null;
+    }
 
     // 3) Create a new user
     const newUser = { ...body, password: hashedPassword };
@@ -74,8 +84,6 @@ export class UserService {
     } else {
       body.avatar = null;
     }
-
-    // console.log(Buffer.from(file?.buffer));
 
     return await this.repoService.updateOne(TABLES.USERS, { id }, body);
   }

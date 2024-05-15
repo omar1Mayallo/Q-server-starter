@@ -22,11 +22,6 @@ import { isDatabaseError } from 'src/shared/types/errors/database-errors';
  */
 @Catch()
 export class CustomI18nValidationExceptionFilter extends I18nValidationExceptionFilter {
-  /**
-   * Constructs the custom I18nValidationExceptionFilter.
-   *
-   * @param options Options for detailed errors or custom error formatting.
-   */
   constructor(
     options?:
       | I18nValidationExceptionFilterDetailedErrorsOption
@@ -35,13 +30,6 @@ export class CustomI18nValidationExceptionFilter extends I18nValidationException
     super(options);
   }
 
-  /**
-   * Catches exceptions thrown in the application.
-   *
-   * @param exception The exception object thrown.
-   * @param host The arguments host providing context about the exception.
-   * @returns The handled exception response.
-   */
   catch(exception: unknown, host: ArgumentsHost): any {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();

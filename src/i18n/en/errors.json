@@ -9,7 +9,8 @@
   },
 
   "Http_Errors": {
-    "INVALID_CREDENTIALS": "Invalid credentials"
+    "INVALID_CREDENTIALS": "Invalid credentials",
+    "EMAIL_UNIQUE": "Email already exists"
   },
 
   "Database_Errors": {},

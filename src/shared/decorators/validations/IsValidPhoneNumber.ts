@@ -31,6 +31,10 @@ export class IsValidPhoneNumberConstraint
   }
 }
 
+/**
+ * Custom decorator function to validate if a property value is a valid phone number.
+ * @param validationOptions Optional validation options.
+ */
 export function IsValidPhoneNumber(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({

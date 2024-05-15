@@ -39,7 +39,7 @@ export class UserController {
     FileInterceptor('avatar', {
       fileFilter: FileValidator.fileFilter(
         /\.(jpg|jpeg)$/,
-        'Only JPG, JPEG, files are allowed',
+        'Only jpg, jpeg, files are allowed',
       ),
       limits: { fileSize: FileValidator.avatarSize },
     }),
@@ -84,7 +84,7 @@ export class UserController {
     FileInterceptor('avatar', {
       fileFilter: FileValidator.fileFilter(
         /\.(jpg|jpeg)$/,
-        'Only JPG, JPEG, files are allowed',
+        'Only jpg, jpeg, files are allowed',
       ),
       limits: { fileSize: FileValidator.avatarSize },
     }),

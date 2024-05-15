@@ -13,6 +13,7 @@ export type I18nTranslations = {
         };
         "Http_Errors": {
             "INVALID_CREDENTIALS": string;
+            "EMAIL_UNIQUE": string;
         };
         "Database_Errors": {};
         "Other_Errors": {

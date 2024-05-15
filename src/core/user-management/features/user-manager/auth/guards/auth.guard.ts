@@ -1,4 +1,3 @@
-// authorization.guard.ts
 import {
   CanActivate,
   ExecutionContext,
@@ -18,6 +17,9 @@ export interface AuthRequest extends Request {
   user: UserModel;
 }
 
+/**
+ * Guard responsible for authenticating and authorizing incoming requests.
+ */
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
@@ -35,7 +37,7 @@ export class AuthGuard implements CanActivate {
       'actionName',
       context.getHandler(), // For (method-level)
     );
-    const isAuthenticationOnly = // For (class-level and method-level)
+    const isAuthenticationOnly =
       this.reflector.getAllAndOverride<boolean>('isAuthenticationOnly', [
         context.getHandler(),
         context.getClass(),

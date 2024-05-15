@@ -15,28 +15,16 @@ import { RepositoryModule } from './shared/modules/repository/repository.module'
   imports: [
     PermissionsModule,
     // ______ BASE_CONFIGURATIONS_MODULES ______ //
-    // ENV_CONFIGURATIONS_MODULE [Global]
     ConfigModule.forRoot(ConfigOptions),
-
-    // DATABASE_MODULE [Global]
     DatabaseModule,
-
-    // I18N_MODULE [Global]
     I18nCustomModule,
-
-    // HELPERS_MODULE [Global]
     CustomHelpersModule,
-
-    // REPOSITORY_MODULE [Global]
     RepositoryModule,
-
-    // ______ APP_MODULES ______ //
+    // ______ CORE_MODULES ______ //
     UserModule,
     AuthModule,
     RoleModule,
     GroupModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

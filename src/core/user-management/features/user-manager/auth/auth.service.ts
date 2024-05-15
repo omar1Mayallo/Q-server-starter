@@ -3,11 +3,10 @@ import { ConfigService } from '@nestjs/config';
 import { BcryptService } from 'src/core/user-management/common/modules/bcrypt/bcrypt.service';
 import { JwtService } from 'src/core/user-management/common/modules/jwt/jwt.service';
 import { TABLES } from 'src/shared/constants/tables';
+import { I18nCustomService } from 'src/shared/modules/I18n-custom/I18n-custom.service';
+import { RepositoryService } from 'src/shared/modules/repository/repository.service';
 import { UserModel } from 'src/shared/types/entities/user-management.model';
 import { LoginUserDTO } from './dto/login.dto';
-import { IUserTokenResponse } from './types/user-token-response.type';
-import { RepositoryService } from 'src/shared/modules/repository/repository.service';
-import { I18nCustomService } from 'src/shared/modules/I18n-custom/I18n-custom.service';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +18,7 @@ export class AuthService {
     private readonly i18nService: I18nCustomService,
   ) {}
 
-  // async register(body: CreateUserDTO): Promise<IUserTokenResponse> {
+  // async register(body: CreateUserDTO) {
   //   // 1) Create User
   //   const user = await this.userService.createUser(body);
 
@@ -31,7 +30,7 @@ export class AuthService {
   //   return { user, token };
   // }
 
-  async login(body: LoginUserDTO): Promise<IUserTokenResponse> {
+  async login(body: LoginUserDTO) {
     // 1) Check If User is Exist and Password Is Correct
     const user = await this.repoService.getOne(
       TABLES.USERS,

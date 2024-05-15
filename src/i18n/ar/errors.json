@@ -9,7 +9,8 @@
   },
 
   "Http_Errors": {
-    "INVALID_CREDENTIALS": "بيانات الولوج غير صالحة"
+    "INVALID_CREDENTIALS": "بيانات الولوج غير صالحة",
+    "EMAIL_UNIQUE": "البريد الالكتروني موجود مسبقا"
   },
 
   "Database_Errors": {},

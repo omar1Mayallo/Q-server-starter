@@ -14,43 +14,35 @@ import { i18nExceptionFilterOptions } from './config/errors/i18nExceptionFilterO
 (async () => {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   // ____________ MIDDLEWARES ____________ //
-  // [1] CORS | https://docs.nestjs.com/security/cors#getting-started
   app.enableCors();
-  // [2] HELMET | https://helmetjs.github.io/
   app.use(helmet());
-  // [3] RATE_LIMITER | https://www.npmjs.com/package/express-rate-limit
+  app.use(compression());
   // app.use(
   //   rateLimit({
   //     windowMs: 60 * 60 * 1000, // 1 Hour
   //     max: 1000, // limit each IP to 1000 requests per windowMs
   //   }),
   // );
-  // [4] COMPRESSION | https://www.npmjs.com/package/compression
-  app.use(compression());
 
-  // ____________ VALIDATION_PIPS ____________ //
+  // ____________ VALIDATION_PIPES ____________ //
   app.useGlobalPipes(
     new I18nValidationPipe({
       transform: true,
-      whitelist: true, // Enable whitelisting to strip non-DTO properties
-      forbidNonWhitelisted: true, // Optional: Throw errors when non-whitelisted fields are found
+      whitelist: true,
+      forbidNonWhitelisted: true,
     }),
   );
   app.useGlobalFilters(
     new CustomI18nValidationExceptionFilter(i18nExceptionFilterOptions),
   );
 
-  // ____________ ACCESS_APP_CONFIGS ____________ //
-  const configService = app.get(ConfigService<EnvironmentVariables>);
-
   // ____________ START_APP ____________ //
-  // [1] API Global Prefix
+  const configService = app.get(ConfigService<EnvironmentVariables>);
   const globalPrefix = configService.get<string>('API_PREFIX');
-  app.setGlobalPrefix(globalPrefix);
-  // [2] App Port and Domain
   const port = configService.get<number>('APP_PORT');
   const serverDomain = configService.get<string>('SERVER_URL');
   const mode = configService.get<string>('NODE_ENV');
+  app.setGlobalPrefix(globalPrefix);
 
   await app.listen(port, () => {
     Logger.verbose(

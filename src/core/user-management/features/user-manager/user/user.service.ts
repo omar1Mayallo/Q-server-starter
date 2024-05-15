@@ -10,6 +10,7 @@ import { RepositoryService } from 'src/shared/modules/repository/repository.serv
 import { GetAllResponse } from 'src/shared/modules/repository/repository.types';
 import { GetAllUsersDTO } from './dto/get-users.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
+import { I18nCustomService } from 'src/shared/modules/I18n-custom/I18n-custom.service';
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,7 @@ export class UserService {
     private readonly knex: Knex,
     private readonly bcryptService: BcryptService,
     private readonly repoService: RepositoryService<UserModel>,
+    private readonly i18nService: I18nCustomService,
   ) {}
 
   async createUser(
@@ -34,7 +36,7 @@ export class UserService {
     );
     if (emailExist) {
       throw new BadRequestException(
-        'Email already exist, Please use another one',
+        this.i18nService.t('errors.Http_Errors.EMAIL_UNIQUE'),
       );
     }
 

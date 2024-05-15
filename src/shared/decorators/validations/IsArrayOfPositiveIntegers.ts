@@ -22,10 +22,14 @@ class IsArrayOfPositiveIntegersConstraint
   }
 
   defaultMessage(_: ValidationArguments) {
-    return 'All elements in the array must be positive integers.';
+    return 'The property must be an array of positive integers.';
   }
 }
 
+/**
+ * Custom decorator function to validate if a property value is an array containing only positive integers.
+ * @param validationOptions Optional validation options.
+ */
 export function IsArrayOfPositiveIntegers(
   validationOptions?: ValidationOptions,
 ) {

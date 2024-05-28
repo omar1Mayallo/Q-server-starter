@@ -25,6 +25,7 @@ import { CreateUserDTO } from './dto/create-user.dto';
 import { GetAllUsersDTO } from './dto/get-users.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserService } from './user.service';
+import { AssignUserPermissionsDTO } from './dto/assign-user-permissions.dto';
 
 @UseGuards(AuthGuard)
 @Controller('users')
@@ -104,5 +105,16 @@ export class UserController {
   @ActionName(USER_ACTIONS.DELETE_USERS)
   async deleteUsers(@Body() body: IsValidArrayIdsDTO) {
     await this.userService.deleteUsers(body.ids);
+  }
+
+  // @DESC: Assign Permissions to User
+  // @URL: POST => "/users/:id/permissions"
+  @Post('/:id/permissions')
+  @ActionName(USER_ACTIONS.ASSIGN_USER_PERMISSIONS)
+  async assignUserPermissions(
+    @Param() param: IsValidParamIdDTO,
+    @Body() body: AssignUserPermissionsDTO,
+  ) {
+    return await this.userService.assignUserPermissions(param.id, body.actions);
   }
 }

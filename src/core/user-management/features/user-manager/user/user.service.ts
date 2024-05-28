@@ -89,4 +89,26 @@ export class UserService {
 
     return await this.repoService.updateOne(TABLES.USERS, { id }, body);
   }
+
+  async assignUserPermissions(id: number, actions: string[]) {
+    // 1) CHECK User Exists
+    const user = await this.getUser(id);
+
+    // 2) DELETE The Previous User_Actions
+    await this.knex(TABLES.USER_ENTITY_ACTION)
+      .where({ email: user.email })
+      .del();
+
+    // 3) Create a new User_Actions with user.email and body.actions items
+    const newUserActions = actions.map((action) => ({
+      email: user.email,
+      action_key: action,
+    }));
+
+    if (newUserActions.length > 0) {
+      await this.knex(TABLES.USER_ENTITY_ACTION).insert(newUserActions);
+    }
+
+    return { status: 'Success' };
+  }
 }

@@ -36,3 +36,11 @@ export class UserRoleModel extends BaseModel {
 
   role_id: number;
 }
+
+export class GroupModel extends BaseModel {
+  name: string;
+
+  description?: string;
+
+  status: STATUS;
+}

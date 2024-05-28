@@ -6,6 +6,24 @@ export async function seed(knex: Knex): Promise<void> {
 
   await knex(TABLES.ENTITY).insert([
     {
+      module_key: 'portal-panel',
+      entity_key: 'contacts',
+      en_name: 'Contacts',
+      ar_name: 'جهات الاتصال',
+      entity_url: 'contacts',
+      order: 0,
+      icon: 'Contacts',
+    },
+    {
+      module_key: 'portal-panel',
+      entity_key: 'dictionary',
+      en_name: 'Dictionary',
+      ar_name: 'لوحة التحكم',
+      entity_url: 'Dictionary',
+      order: 1,
+      icon: 'dictionary',
+    },
+    {
       module_key: 'admin-panel',
       entity_key: 'dashboard',
       en_name: 'Dashboard',
@@ -91,7 +109,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       module_key: 'billing-settings',
       entity_key: 'configurations',
-      en_name: 'configurations',
+      en_name: 'Configurations',
       ar_name: 'الضبط',
       entity_url:
         'financial-services/billing-management/billing-settings/configurations',

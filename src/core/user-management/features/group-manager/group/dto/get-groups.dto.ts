@@ -1,7 +1,7 @@
 import { IsOptional } from 'class-validator';
 import { CustomReqQueryDTO } from 'src/shared/modules/repository/types/custom-req-query.types';
 
-export class GetAllRolesDTO extends CustomReqQueryDTO {
+export class GetAllGroupsDTO extends CustomReqQueryDTO {
   @IsOptional()
   status: string;
 

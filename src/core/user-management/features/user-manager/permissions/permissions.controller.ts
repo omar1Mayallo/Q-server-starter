@@ -1,9 +1,11 @@
-import { PermissionsService } from './permissions.service';
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '../auth/guards/auth.guard';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { IsAuthenticationGuard } from 'src/shared/decorators/is-auth-guard.decorator';
 import { LoggedUser } from 'src/shared/decorators/logged-user.decorator';
 import { UserModel } from 'src/shared/types/entities/user-management.model';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { GetSystemPermissionsDto } from './dto';
+import { PermissionsService } from './permissions.service';
+import { IsValidParamIdDTO } from 'src/shared/dtos/is-valid-id-param.dto';
 
 @UseGuards(AuthGuard)
 @IsAuthenticationGuard()
@@ -12,10 +14,10 @@ export class PermissionsController {
   constructor(private readonly permissionService: PermissionsService) {}
 
   // @DESC: GET All System Permissions
-  // @URL: GET => "/permissions/system"
+  // @URL: GET => "/permissions/system?origin=PORTAL or ADMINISTRATIVE"
   @Get('/system')
-  async getSystemPermissions() {
-    console.log('System Permissions');
+  async getSystemPermissions(@Query() query: GetSystemPermissionsDto) {
+    return await this.permissionService.getSystemPermissions(query.origin);
   }
 
   // @DESC: GET All Logged User Permissions
@@ -33,5 +35,12 @@ export class PermissionsController {
   @Get('/logged-user-actions')
   async getLoggedUserActions(@LoggedUser() user: UserModel) {
     return await this.permissionService.getLoggedUserActions(user.email);
+  }
+
+  // @DESC: GET All User Permissions By Id
+  // @URL: GET => "/permissions/actions/:id"
+  @Get('/actions/:id')
+  async getUserActionByUserId(@Param() param: IsValidParamIdDTO) {
+    return await this.permissionService.getUserActionByUserId(param.id);
   }
 }

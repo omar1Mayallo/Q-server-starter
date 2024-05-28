@@ -10,6 +10,7 @@ import {
   IPermission,
   ModuleProps,
 } from './types/permissions.types';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class PermissionsService {
@@ -17,6 +18,7 @@ export class PermissionsService {
     @Inject(KNEX_CONNECTION)
     private readonly knex: Knex,
     private readonly helpers: CustomHelpersService,
+    private readonly userService: UserService,
   ) {}
 
   async getLoggedUserPermissions(email: string, type: USER_TYPE) {
@@ -50,6 +52,13 @@ export class PermissionsService {
     return userActions;
   }
 
+  async getUserActionByUserId(id: number) {
+    const user = await this.userService.getUser(id);
+    const actions = await this.getLoggedUserActions(user.email);
+
+    return actions;
+  }
+
   async verifyPermissions(
     email: string,
     action: string | string[],
@@ -66,6 +75,96 @@ export class PermissionsService {
     }
     // 2-2) action as act-1 .. check it exists in userActions
     else return userActions.includes(action);
+  }
+
+  async getSystemPermissions(origin: USER_TYPE) {
+    const { MODULE, ENTITY, ENTITY_ACTION } = TABLES;
+    const systemPermissions = await this.knex
+      .select({
+        module_key: `${MODULE}.module_key`,
+        module_ar_name: `${MODULE}.ar_name`,
+        module_en_name: `${MODULE}.en_name`,
+        module_parent_key: `${MODULE}.parent_key`,
+        module_source: `${MODULE}.source`,
+        entity_key: `${ENTITY}.entity_key`,
+        entity_module_parent_key: `${ENTITY}.module_key`,
+        entity_ar_name: `${ENTITY}.ar_name`,
+        entity_en_name: `${ENTITY}.en_name`,
+        action_key: `${ENTITY_ACTION}.action_key`,
+        action_ar_name: `${ENTITY_ACTION}.action_ar_name`,
+        action_en_name: `${ENTITY_ACTION}.action_en_name`,
+        action_category: `${ENTITY_ACTION}.action_category`,
+      })
+      .from(ENTITY_ACTION)
+      .join(ENTITY, `${ENTITY_ACTION}.entity_key`, `${ENTITY}.entity_key`)
+      .join(MODULE, `${ENTITY}.module_key`, `${MODULE}.module_key`)
+      .where({
+        [`${MODULE}.source`]: origin,
+      });
+
+    const moduleMap = new Map();
+
+    systemPermissions.forEach((permission) => {
+      const {
+        module_key,
+        module_ar_name,
+        module_en_name,
+        module_parent_key,
+        module_source,
+        entity_key,
+        entity_module_parent_key,
+        entity_ar_name,
+        entity_en_name,
+        action_key,
+        action_ar_name,
+        action_en_name,
+        action_category,
+      } = permission;
+
+      if (!moduleMap.has(module_key)) {
+        moduleMap.set(module_key, {
+          module_key,
+          module_ar_name,
+          module_en_name,
+          module_parent_key,
+          module_source,
+          entities: new Map(),
+        });
+      }
+
+      const module = moduleMap.get(module_key);
+
+      if (!module.entities.has(entity_key)) {
+        module.entities.set(entity_key, {
+          entity_key,
+          entity_module_parent_key,
+          entity_ar_name,
+          entity_en_name,
+          actions: [],
+        });
+      }
+
+      const entity = module.entities.get(entity_key);
+      entity.actions.push({
+        action_key,
+        action_ar_name,
+        action_en_name,
+        action_category,
+      });
+    });
+
+    const tree = [];
+
+    moduleMap.forEach((module) => {
+      const entities = [];
+      module.entities.forEach((entity) => {
+        entities.push(entity);
+      });
+      module.entities = entities;
+      tree.push(module);
+    });
+
+    return tree;
   }
 
   // ____________________ PRIVATE ____________________ //

@@ -10,6 +10,8 @@ export type I18nTranslations = {
             "USERNAME_REGEX": string;
             "ARRAY_POSITIVE": string;
             "INVALID_PHONE_NUMBER": string;
+            "ARRAY_MUST_BE_ARRAY": string;
+            "ARRAY_STRING": string;
         };
         "Http_Errors": {
             "INVALID_CREDENTIALS": string;

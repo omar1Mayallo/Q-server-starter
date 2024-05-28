@@ -8,6 +8,8 @@ export async function up(knex: Knex): Promise<void> {
 
     // INFO
     table.string('action_key').notNullable().unique();
+    table.string('action_en_name').notNullable();
+    table.string('action_ar_name').notNullable();
     table.string('action_category'); // CRUD
     table
       .string('entity_key')

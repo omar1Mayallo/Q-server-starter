@@ -2,7 +2,10 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Knex } from 'knex';
 import { KNEX_CONNECTION } from 'src/database/database.provider';
 import { CustomHelpersService } from 'src/shared/modules/custom-helpers/custom-helpers.service';
-import { UserActionsModel } from 'src/shared/types/entities/user-management.model';
+import {
+  RoleActionsModel,
+  UserActionsModel,
+} from 'src/shared/types/entities/user-management.model';
 import { USER_TYPE } from 'src/shared/types/enums';
 import { TABLES } from './../../../../../shared/constants/tables';
 import {
@@ -11,6 +14,7 @@ import {
   ModuleProps,
 } from './types/permissions.types';
 import { UserService } from '../user/user.service';
+import { RoleService } from '../../role-manager/role/role.service';
 
 @Injectable()
 export class PermissionsService {
@@ -19,6 +23,7 @@ export class PermissionsService {
     private readonly knex: Knex,
     private readonly helpers: CustomHelpersService,
     private readonly userService: UserService,
+    private readonly roleService: RoleService,
   ) {}
 
   async getLoggedUserPermissions(email: string, type: USER_TYPE) {
@@ -55,6 +60,19 @@ export class PermissionsService {
   async getUserActionByUserId(id: number) {
     const user = await this.userService.getUser(id);
     const actions = await this.getLoggedUserActions(user.email);
+
+    return actions;
+  }
+
+  async getRoleActionByRoleId(id: number) {
+    const role = await this.roleService.getRole(id);
+
+    const actions = await this.knex<RoleActionsModel>(
+      TABLES.ROLE_ENTITY_ACTIONS,
+    )
+      .where({ role_id: role.id })
+      .select('action_key')
+      .pluck('action_key');
 
     return actions;
   }

@@ -15,12 +15,11 @@ export async function up(knex: Knex): Promise<void> {
       .onDelete('CASCADE')
       .notNullable();
     table
-      .integer('action_id')
-      .unsigned()
-      .references('id')
+      .string('action_key')
+      .references('action_key')
       .inTable(TABLES.ENTITY_ACTION)
-      .onDelete('CASCADE')
-      .notNullable();
+      .onDelete('RESTRICT')
+      .onUpdate('CASCADE');
 
     // TIMESTAMPS
     table.timestamps(true, true);

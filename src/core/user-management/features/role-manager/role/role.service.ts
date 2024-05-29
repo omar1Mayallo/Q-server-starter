@@ -38,4 +38,26 @@ export class RoleService {
   async deleteRoles(ids: number[]) {
     return await this.repoService.deleteByIds(TABLES.ROLES, ids);
   }
+
+  async assignRolePermissions(id: number, actions: string[]) {
+    // 1) CHECK Role Exists
+    const role = await this.getRole(id);
+
+    // 2) DELETE The Previous Role_Actions
+    await this.knex(TABLES.ROLE_ENTITY_ACTIONS)
+      .where({ role_id: role.id })
+      .del();
+
+    // 3) Create a new Role_Actions with role.id and body.actions items
+    const newRoleActions = actions.map((action) => ({
+      role_id: role.id,
+      action_key: action,
+    }));
+
+    if (newRoleActions.length > 0) {
+      await this.knex(TABLES.ROLE_ENTITY_ACTIONS).insert(newRoleActions);
+    }
+
+    return { status: 'Success' };
+  }
 }

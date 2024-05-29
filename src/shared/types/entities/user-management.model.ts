@@ -31,6 +31,12 @@ export class RoleModel extends BaseModel {
   type: USER_TYPE;
 }
 
+export class RoleActionsModel extends BaseModel {
+  role_id: number;
+
+  action_key: string;
+}
+
 export class UserRoleModel extends BaseModel {
   user_id: number;
 

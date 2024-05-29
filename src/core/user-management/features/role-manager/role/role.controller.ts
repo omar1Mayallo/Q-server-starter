@@ -17,6 +17,7 @@ import { RoleService } from './role.service';
 import { AuthGuard } from '../../user-manager/auth/guards/auth.guard';
 import { IsValidParamIdDTO } from 'src/shared/dtos/is-valid-id-param.dto';
 import { IsAuthenticationGuard } from 'src/shared/decorators/is-auth-guard.decorator';
+import { AssignPermissionsDTO } from 'src/core/user-management/common/dto/assign-permissions.dto';
 
 @UseGuards(AuthGuard)
 @IsAuthenticationGuard()
@@ -60,5 +61,15 @@ export class RoleController {
   @Delete()
   async deleteRoles(@Body() body: IsValidArrayIdsDTO) {
     await this.roleService.deleteRoles(body.ids);
+  }
+
+  // @DESC: Assign Permissions to Role
+  // @URL: POST => "/roles/:id/permissions"
+  @Post('/:id/permissions')
+  async assignRolePermissions(
+    @Param() param: IsValidParamIdDTO,
+    @Body() body: AssignPermissionsDTO,
+  ) {
+    return await this.roleService.assignRolePermissions(param.id, body.actions);
   }
 }

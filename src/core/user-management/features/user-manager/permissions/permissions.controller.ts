@@ -38,9 +38,16 @@ export class PermissionsController {
   }
 
   // @DESC: GET All User Permissions By Id
-  // @URL: GET => "/permissions/actions/:id"
-  @Get('/actions/:id')
+  // @URL: GET => "/permissions/users/actions/:id"
+  @Get('/users/actions/:id')
   async getUserActionByUserId(@Param() param: IsValidParamIdDTO) {
     return await this.permissionService.getUserActionByUserId(param.id);
+  }
+
+  // @DESC: GET All Roles Permissions By Id
+  // @URL: GET => "/permissions/roles/actions/:id"
+  @Get('/roles/actions/:id')
+  async getRoleActionByRoleId(@Param() param: IsValidParamIdDTO) {
+    return await this.permissionService.getRoleActionByRoleId(param.id);
   }
 }
